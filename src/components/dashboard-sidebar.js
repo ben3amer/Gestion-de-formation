@@ -33,6 +33,21 @@ const items = [
     title: 'Formations'
   },
   {
+    href: '/formateurs',
+    icon: (<ShoppingBagIcon fontSize="small" />),
+    title: 'Formateurs'
+  },
+  {
+    href: '/formations',
+    icon: (<ShoppingBagIcon fontSize="small" />),
+    title: 'Sessions'
+  },
+  {
+    href: '/users',
+    icon: (<ShoppingBagIcon fontSize="small" />),
+    title: 'Participants'
+  },
+  {
     href: '/account',
     icon: (<UserIcon fontSize="small" />),
     title: 'Account'
