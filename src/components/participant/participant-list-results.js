@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
-export const ParticipantistResults = ({ participants, ...rest }) => {
+export const ParticipantListResults = ({ participants, ...rest }) => {
   const [selectedParticipantIds, setSelectedParticipantIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -42,7 +42,7 @@ export const ParticipantistResults = ({ participants, ...rest }) => {
       newSelectedParticipantIds = newSelectedParticipantIds.concat(selectedParticipantIds, id);
     } else if (selectedIndex === 0) {
       newSelectedParticipantIds = newSelectedParticipantIds.concat(selectedParticipantIds.slice(1));
-    } else if (selectedIndex === selectedParticipantds.length - 1) {
+    } else if (selectedIndex === selectedParticipantIds.length - 1) {
       newSelectedParticipantIds = newSelectedParticipantIds.concat(selectedParticipantIds.slice(0, -1));
     } else if (selectedIndex > 0) {
       newSelectedParticipantIds = newSelectedParticipantIds.concat(
@@ -164,5 +164,5 @@ export const ParticipantistResults = ({ participants, ...rest }) => {
 };
 
 ParticipantListResults.propTypes = {
-    participants: PropTypes.array.isRequired
+  participants: PropTypes.array.isRequired
 };

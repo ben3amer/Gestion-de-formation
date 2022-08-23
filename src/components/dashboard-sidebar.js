@@ -38,12 +38,12 @@ const items = [
     title: 'Formateurs'
   },
   {
-    href: '/formations',
+    href: '/sessions',
     icon: (<ShoppingBagIcon fontSize="small" />),
     title: 'Sessions'
   },
   {
-    href: '/users',
+    href: '/participants',
     icon: (<ShoppingBagIcon fontSize="small" />),
     title: 'Participants'
   },
