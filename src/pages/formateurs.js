@@ -9,7 +9,7 @@ const Formateurs = () => (
   <>
     <Head>
       <title>
-      Formateurs | IGA Tunisie
+      Formateur | IGA Tunisie
       </title>
     </Head>
     <Box
