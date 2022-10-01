@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { useState } from "react";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import PropTypes from "prop-types";
+import { format } from "date-fns";
 import {
   Avatar,
   Box,
@@ -13,9 +13,9 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
-} from '@mui/material';
-import { getInitials } from '../../utils/get-initials';
+  Typography,
+} from "@mui/material";
+import { getInitials } from "../../utils/get-initials";
 
 export const UserListResults = ({ users, ...rest }) => {
   const [selectedUserIds, setSelectedUserIds] = useState([]);
@@ -74,36 +74,21 @@ export const UserListResults = ({ users, ...rest }) => {
                     checked={selectedUserIds.length === users.length}
                     color="primary"
                     indeterminate={
-                      selectedUserIds.length > 0
-                      && selectedUserIds.length < users.length
+                      selectedUserIds.length > 0 && selectedUserIds.length < users.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
-                <TableCell>
-                  Name
-                </TableCell>
-                <TableCell>
-                  Email
-                </TableCell>
-                <TableCell>
-                  Location
-                </TableCell>
-                <TableCell>
-                  Phone
-                </TableCell>
-                <TableCell>
-                  Registration date
-                </TableCell>
+                <TableCell>First Name</TableCell>
+                <TableCell>Last Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Role</TableCell>
+                <TableCell>Registration date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.slice(0, limit).map((user) => (
-                <TableRow
-                  hover
-                  key={user.id}
-                  selected={selectedUserIds.indexOf(user.id) !== -1}
-                >
+                <TableRow hover key={user._id} selected={selectedUserIds.indexOf(user.id) !== -1}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedUserIds.indexOf(user.id) !== -1}
@@ -111,39 +96,11 @@ export const UserListResults = ({ users, ...rest }) => {
                       value="true"
                     />
                   </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar
-                        src={user.avatarUrl}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials(user.name)}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {user.name}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    {user.email}
-                  </TableCell>
-                  <TableCell>
-                    {`${user.address.city}, ${user.address.state}, ${user.address.country}`}
-                  </TableCell>
-                  <TableCell>
-                    {user.phone}
-                  </TableCell>
-                  <TableCell>
-                    {format(user.createdAt, 'dd/MM/yyyy')}
-                  </TableCell>
+                  <TableCell>{user.firstName}</TableCell>
+                  <TableCell>{user.lastName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.role}</TableCell>
+                  <TableCell>{format(new Date(user.createdAt), "dd/MM/yyyy")}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -164,5 +121,5 @@ export const UserListResults = ({ users, ...rest }) => {
 };
 
 UserListResults.propTypes = {
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
 };

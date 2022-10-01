@@ -4,18 +4,30 @@ import { UserListResults } from "../components/user/user-list-results";
 import { UserListToolbar } from "../components/user/user-list-toolbar";
 import { DashboardLayout } from "../components/dashboard-layout";
 import { users } from "../__mocks__/users";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "src/contexts/auth";
+import { getUsers } from "src/api/user";
 
 const Users = () => {
-  const { user, isAuthenticated, loading } = useAuth();
   const router = useRouter();
+  const { user, isAuthenticated, loading } = useAuth();
+  const [users, setUsers] = useState([]);
+  const [criteria, setCriteria] = useState("");
+
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       router.push("/login");
     }
   }, [isAuthenticated, loading, router]);
+
+  useEffect(() => {
+    getUsers(criteria).then((res) => setUsers(res.data));
+  }, [criteria]);
+
+  const getCriteria = (criteria) => {
+    setCriteria(criteria);
+  };
 
   return (
     isAuthenticated && (
@@ -31,7 +43,7 @@ const Users = () => {
           }}
         >
           <Container maxWidth={false}>
-            <UserListToolbar />
+            <UserListToolbar setCriteria={getCriteria} />
             <Box sx={{ mt: 3 }}>
               <UserListResults users={users} />
             </Box>
