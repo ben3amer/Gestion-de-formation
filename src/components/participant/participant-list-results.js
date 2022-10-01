@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import { getSessionById } from "../../api/session";
 import {
   Avatar,
   Box,
@@ -81,13 +82,13 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  fisrtName
+                </TableCell>
+                <TableCell>
+                  lastName
                 </TableCell>
                 <TableCell>
                   Email
-                </TableCell>
-                <TableCell>
-                  Location
                 </TableCell>
                 <TableCell>
                   Phone
@@ -112,38 +113,19 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
                     />
                   </TableCell>
                   <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: 'center',
-                        display: 'flex'
-                      }}
-                    >
-                      <Avatar
-                        src={participant.avatarUrl}
-                        sx={{ mr: 2 }}
-                      >
-                        {getInitials(participant.name)}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
-                        {participant.name}
-                      </Typography>
-                    </Box>
+                    {participant.firstName}
+                  </TableCell>
+                  <TableCell>
+                    {participant.lastName}
                   </TableCell>
                   <TableCell>
                     {participant.email}
                   </TableCell>
                   <TableCell>
-                    {`${participant.address.city}, ${participant.address.state}, ${participant.address.country}`}
-                  </TableCell>
-                  <TableCell>
                     {participant.phone}
                   </TableCell>
-                  <TableCell>
-                    {format(participant.createdAt, 'dd/MM/yyyy')}
-                  </TableCell>
+                  <TableCell>{format(new Date(participant.createdAt), "MM/dd/yyyy")}</TableCell>
+                  
                 </TableRow>
               ))}
             </TableBody>

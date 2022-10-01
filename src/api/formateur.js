@@ -11,6 +11,9 @@ export const getFormateurs = () => {
 export const getFormateurById = (id) => {
   return api.get(`/formateurs/${id}`);
 };
+export const getFormateurByNameLastname = (name, lastname) => {
+  return api.get(`/formateurs/${name}/${lastname}`);
+};
 
 export const updateFormateur = (id, body) => {
   return api.get(`/formateurs/${id}`, body);
