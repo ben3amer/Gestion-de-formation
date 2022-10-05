@@ -26,7 +26,7 @@ export const FormateurListResults = ({ formateurs, ...rest }) => {
     let newSelectedFormateurIds;
 
     if (event.target.checked) {
-      newSelectedFormateurIds = formateurs.map((formateur) => formateur._id);
+      newSelectedFormateurIds = formateurs.map((formateur) => formateur.id);
     } else {
       newSelectedFormateurIds = [];
     }
@@ -74,13 +74,13 @@ export const FormateurListResults = ({ formateurs, ...rest }) => {
                     checked={selectedFormateurIds.length === formateurs.length}
                     color="primary"
                     indeterminate={
-                      selectedFormateurIds.length > 0 &&
-                      selectedFormateurIds.length < formateurs.length
+                      selectedFormateurIds.length > 0 && selectedFormateurIds.length < formateurs.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
-                <TableCell>Name</TableCell>
+                <TableCell>First Name</TableCell>
+                <TableCell>Last Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Phone</TableCell>
                 <TableCell>Registration date</TableCell>
@@ -88,36 +88,19 @@ export const FormateurListResults = ({ formateurs, ...rest }) => {
             </TableHead>
             <TableBody>
               {formateurs.slice(0, limit).map((formateur) => (
-                <TableRow
-                  hover
-                  key={formateur._id}
-                  selected={selectedFormateurIds.indexOf(formateur._id) !== -1}
-                >
+                <TableRow hover key={formateur._id} selected={selectedFormateurIds.indexOf(formateur.id) !== -1}>
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedFormateurIds.indexOf(formateur._id) !== -1}
-                      onChange={(event) => handleSelectOne(event, formateur._id)}
+                      checked={selectedFormateurIds.indexOf(formateur.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, formateur.id)}
                       value="true"
                     />
                   </TableCell>
-                  <TableCell>
-                    <Box
-                      sx={{
-                        alignItems: "center",
-                        display: "flex",
-                      }}
-                    >
-                      <Avatar src="" sx={{ mr: 2 }}>
-                        {formateur.prenom[0] + formateur.nom[0]}
-                      </Avatar>
-                      <Typography color="textPrimary" variant="body1">
-                        {`${formateur.prenom} ${formateur.nom}`}
-                      </Typography>
-                    </Box>
-                  </TableCell>
+                  <TableCell>{formateur.nom}</TableCell>
+                  <TableCell>{formateur.prenom}</TableCell>
                   <TableCell>{formateur.email}</TableCell>
                   <TableCell>{formateur.tel}</TableCell>
-                  <TableCell>{format(new Date(formateur.createdAt), "MM/dd/yyyy")}</TableCell>
+                  <TableCell>{format(new Date(formateur.createdAt), "dd/MM/yyyy")}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

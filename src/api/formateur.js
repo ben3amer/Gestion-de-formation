@@ -4,15 +4,12 @@ export const createFormateur = (body) => {
   return api.get("/formateurs", body);
 };
 
-export const getFormateurs = () => {
-  return api.get("/formateurs");
+export const getFormateurs = (criteria = "") => {
+  return api.get(`/formateurs?criteria=${criteria}`);
 };
 
 export const getFormateurById = (id) => {
   return api.get(`/formateurs/${id}`);
-};
-export const getFormateurByNameLastname = (name, lastname) => {
-  return api.get(`/formateurs/${name}/${lastname}`);
 };
 
 export const updateFormateur = (id, body) => {

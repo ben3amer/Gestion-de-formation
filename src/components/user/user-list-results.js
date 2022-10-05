@@ -88,11 +88,11 @@ export const UserListResults = ({ users, ...rest }) => {
             </TableHead>
             <TableBody>
               {users.slice(0, limit).map((user) => (
-                <TableRow hover key={user._id} selected={selectedUserIds.indexOf(user.id) !== -1}>
+                <TableRow hover key={user._id} selected={selectedUserIds.indexOf(user._id) !== -1}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedUserIds.indexOf(user.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, user.id)}
+                      onChange={(event) => handleSelectOne(event, user._id)}
                       value="true"
                     />
                   </TableCell>

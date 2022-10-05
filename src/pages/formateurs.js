@@ -3,15 +3,16 @@ import { Box, Container } from "@mui/material";
 import { FormateurListResults } from "../components/formateur/formateur-list-results";
 import { FormateurListToolbar } from "../components/formateur/formateur-list-toolbar";
 import { DashboardLayout } from "../components/dashboard-layout";
-import { useAuth } from "src/contexts/auth";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useAuth } from "src/contexts/auth";
 import { getFormateurs } from "src/api/formateur";
 
 const Formateurs = () => {
   const router = useRouter();
-  const { isAuthenticated, loading } = useAuth();
+  const { formateur, isAuthenticated, loading } = useAuth();
   const [formateurs, setFormateurs] = useState([]);
+  const [criteria, setCriteria] = useState("");
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -20,30 +21,38 @@ const Formateurs = () => {
   }, [isAuthenticated, loading, router]);
 
   useEffect(() => {
-    getFormateurs().then(({ data }) => setFormateurs(data));
-  }, []);
+    getFormateurs(criteria).then((res) => setFormateurs(res.data));
+  }, [criteria]);
+
+  const getCriteria = (criteria) => {
+    setCriteria(criteria);
+  };
+
   return (
-    <>
-      <Head>
-        <title>Formateur | IGA Tunisie</title>
-      </Head>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          py: 8,
-        }}
-      >
-        <Container maxWidth={false}>
-          <FormateurListToolbar />
-          <Box sx={{ mt: 3 }}>
-            <FormateurListResults formateurs={formateurs} />
-          </Box>
-        </Container>
-      </Box>
-    </>
+    isAuthenticated && (
+      <>
+        <Head>
+          <title>Formateurs | IGA Tunisie</title>
+        </Head>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            py: 8,
+          }}
+        >
+          <Container maxWidth={false}>
+            <FormateurListToolbar setCriteria={getCriteria} />
+            <Box sx={{ mt: 3 }}>
+              <FormateurListResults formateurs={formateurs} />
+            </Box>
+          </Container>
+        </Box>
+      </>
+    )
   );
 };
+
 Formateurs.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default Formateurs;

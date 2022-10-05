@@ -4,8 +4,8 @@ export const createParticipant = (body) => {
   return api.get("/participants", body);
 };
 
-export const getParticipants = () => {
-  return api.get("/participants");
+export const getParticipants = (criteria = "") => {
+  return api.get(`/participants?criteria=${criteria}`);
 };
 
 export const getParticipantById = (id) => {

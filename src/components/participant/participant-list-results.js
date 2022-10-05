@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import { getSessionById } from "../../api/session";
+import { useState } from "react";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import PropTypes from "prop-types";
+import { format } from "date-fns";
 import {
   Avatar,
   Box,
@@ -14,9 +13,9 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
-} from '@mui/material';
-import { getInitials } from '../../utils/get-initials';
+  Typography,
+} from "@mui/material";
+import { getInitials } from "../../utils/get-initials";
 
 export const ParticipantListResults = ({ participants, ...rest }) => {
   const [selectedParticipantIds, setSelectedParticipantIds] = useState([]);
@@ -75,36 +74,21 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
                     checked={selectedParticipantIds.length === participants.length}
                     color="primary"
                     indeterminate={
-                      selectedParticipantIds.length > 0
-                      && selectedParticipantIds.length < participants.length
+                      selectedParticipantIds.length > 0 && selectedParticipantIds.length < participants.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
-                <TableCell>
-                  fisrtName
-                </TableCell>
-                <TableCell>
-                  lastName
-                </TableCell>
-                <TableCell>
-                  Email
-                </TableCell>
-                <TableCell>
-                  Phone
-                </TableCell>
-                <TableCell>
-                  Registration date
-                </TableCell>
+                <TableCell>First Name</TableCell>
+                <TableCell>Last Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone</TableCell>
+                <TableCell>Registration date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {participants.slice(0, limit).map((participant) => (
-                <TableRow
-                  hover
-                  key={participant.id}
-                  selected={selectedParticipantIds.indexOf(participant.id) !== -1}
-                >
+                <TableRow hover key={participant._id} selected={selectedParticipantIds.indexOf(participant.id) !== -1}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedParticipantIds.indexOf(participant.id) !== -1}
@@ -112,20 +96,11 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
                       value="true"
                     />
                   </TableCell>
-                  <TableCell>
-                    {participant.firstName}
-                  </TableCell>
-                  <TableCell>
-                    {participant.lastName}
-                  </TableCell>
-                  <TableCell>
-                    {participant.email}
-                  </TableCell>
-                  <TableCell>
-                    {participant.phone}
-                  </TableCell>
-                  <TableCell>{format(new Date(participant.createdAt), "MM/dd/yyyy")}</TableCell>
-                  
+                  <TableCell>{participant.firstName}</TableCell>
+                  <TableCell>{participant.lastName}</TableCell>
+                  <TableCell>{participant.email}</TableCell>
+                  <TableCell>{participant.phone}</TableCell>
+                  <TableCell>{format(new Date(participant.createdAt), "dd/MM/yyyy")}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -146,5 +121,5 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
 };
 
 ParticipantListResults.propTypes = {
-  participants: PropTypes.array.isRequired
+  participants: PropTypes.array.isRequired,
 };
