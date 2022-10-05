@@ -10,7 +10,7 @@ import { getParticipants } from "src/api/participant";
 
 const Participants = () => {
   const router = useRouter();
-  const {participant, isAuthenticated, loading } = useAuth();
+  const {user, isAuthenticated, loading } = useAuth();
   const [participants, setParticipants] = useState([]);
   const [criteria, setCriteria] = useState("");
 

@@ -8,9 +8,8 @@ import {
   SvgIcon,
   Typography
 } from '@mui/material';
-import { Download as DownloadIcon } from '../../icons/download';
 import { Search as SearchIcon } from '../../icons/search';
-import { Upload as UploadIcon } from '../../icons/upload';
+
 
 export const FormationListToolbar = (props) => (
   <Box {...props}>
@@ -31,18 +30,6 @@ export const FormationListToolbar = (props) => (
       </Typography>
       <Box sx={{ m: 1 }}>
         <Button
-          startIcon={(<UploadIcon fontSize="small" />)}
-          sx={{ mr: 1 }}
-        >
-          Import
-        </Button>
-        <Button
-          startIcon={(<DownloadIcon fontSize="small" />)}
-          sx={{ mr: 1 }}
-        >
-          Export
-        </Button>
-        <Button
           color="primary"
           variant="contained"
         >
@@ -55,6 +42,7 @@ export const FormationListToolbar = (props) => (
         <CardContent>
           <Box sx={{ maxWidth: 500 }}>
             <TextField
+            onChange={(e) => props.setCriteria(e.target.value)}
               fullWidth
               InputProps={{
                 startAdornment: (

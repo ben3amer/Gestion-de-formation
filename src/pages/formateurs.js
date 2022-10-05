@@ -10,7 +10,7 @@ import { getFormateurs } from "src/api/formateur";
 
 const Formateurs = () => {
   const router = useRouter();
-  const { formateur, isAuthenticated, loading } = useAuth();
+  const { user, isAuthenticated, loading } = useAuth();
   const [formateurs, setFormateurs] = useState([]);
   const [criteria, setCriteria] = useState("");
 
