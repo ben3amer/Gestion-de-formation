@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const createFormateur = (body) => {
-  return api.get("/formateurs", body);
+  return api.post("/formateurs", body);
 };
 
 export const getFormateurs = (criteria = "") => {
@@ -13,9 +13,9 @@ export const getFormateurById = (id) => {
 };
 
 export const updateFormateur = (id, body) => {
-  return api.get(`/formateurs/${id}`, body);
+  return api.patch(`/formateurs/${id}`, body);
 };
 
 export const deleteFormateur = (id) => {
-  return api.get(`/formateurs/${id}`);
+  return api.delete(`/formateurs/${id}`);
 };

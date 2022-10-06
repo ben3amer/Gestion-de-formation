@@ -99,13 +99,13 @@ export const SessionListResults = ({ sessions,formateurs, formations, ...rest })
                       value="true"
                     />
                   </TableCell>
-                  <TableCell>{formations.titre}</TableCell>
+                  <TableCell>{session.formation.titre}</TableCell>
                   <TableCell>{session.titre}</TableCell>
                   <TableCell>{format(new Date(session.dateDebut), "dd/MM/yyyy")}</TableCell>
                   <TableCell>{format(new Date(session.dateFin), "dd/MM/yyyy")}</TableCell>
                   <TableCell>{session.description}</TableCell>
                   <TableCell>{session.nbParticipants}</TableCell>
-                  <TableCell>{formateurs.nom}  {formateurs.prenom}</TableCell>
+                  <TableCell>{session.formateur.nom}  {session.formateur.prenom}</TableCell>
                   
                 </TableRow>
               ))}

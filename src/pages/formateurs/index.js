@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { FormateurListResults } from "../components/formateur/formateur-list-results";
-import { FormateurListToolbar } from "../components/formateur/formateur-list-toolbar";
-import { DashboardLayout } from "../components/dashboard-layout";
+import { FormateurListResults } from "src/components/formateur/formateur-list-results";
+import { FormateurListToolbar } from "src/components/formateur/formateur-list-toolbar";
+import { DashboardLayout } from "src/components/dashboard-layout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "src/contexts/auth";
@@ -44,7 +44,7 @@ const Formateurs = () => {
           <Container maxWidth={false}>
             <FormateurListToolbar setCriteria={getCriteria} />
             <Box sx={{ mt: 3 }}>
-              <FormateurListResults formateurs={formateurs} />
+              <FormateurListResults formateurs={formateurs} setFormateurs={setFormateurs}/>
             </Box>
           </Container>
         </Box>

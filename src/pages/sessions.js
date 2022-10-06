@@ -7,16 +7,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "src/contexts/auth";
 import { getSessions } from "src/api/session";
-import { getFormateurById } from "src/api/formateur";
-import { getFormationById} from "src/api/formation";
-
 
 const Sessions = () => {
   const router = useRouter();
-  const { user, isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const [sessions, setSessions] = useState([]);
-  const [formateurs, setFormateurs] = useState([]);
-  const [formations, setFormations] = useState([]);
   const [criteria, setCriteria] = useState("");
 
   useEffect(() => {
@@ -28,17 +23,6 @@ const Sessions = () => {
   useEffect(() => {
     getSessions(criteria).then((res) => setSessions(res.data));
   }, [criteria]);
-
-  useEffect(() => {
-    sessions.map(
-      (session) => (getFormateurById(session.idFormateur).then((res) => setFormateurs(res.data) )))
-  }
-  );
-  useEffect(() => {
-    sessions.map(
-      (session) => (getFormationById(session.idFormation).then((res) => setFormations(res.data) )))
-  }
-  );
 
   const getCriteria = (criteria) => {
     setCriteria(criteria);
@@ -60,7 +44,7 @@ const Sessions = () => {
           <Container maxWidth={false}>
             <SessionListToolbar setCriteria={getCriteria} />
             <Box sx={{ mt: 3 }}>
-              <SessionListResults sessions={sessions} formateurs={formateurs} formations={formations}/>
+              <SessionListResults sessions={sessions} />
             </Box>
           </Container>
         </Box>

@@ -3,21 +3,21 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import {
-  Avatar,
   Box,
   Card,
   Checkbox,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from "@mui/material";
-import { getInitials } from "../../utils/get-initials";
+import { Delete, Edit } from "@mui/icons-material";
+import { deleteFormateur } from "src/api/formateur";
 
-export const FormateurListResults = ({ formateurs, ...rest }) => {
+export const FormateurListResults = ({ formateurs, setFormateurs, ...rest }) => {
   const [selectedFormateurIds, setSelectedFormateurIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -62,6 +62,15 @@ export const FormateurListResults = ({ formateurs, ...rest }) => {
     setPage(newPage);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteFormateur(id);
+      setFormateurs(formateurs.filter((formateur) => formateur._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -74,7 +83,8 @@ export const FormateurListResults = ({ formateurs, ...rest }) => {
                     checked={selectedFormateurIds.length === formateurs.length}
                     color="primary"
                     indeterminate={
-                      selectedFormateurIds.length > 0 && selectedFormateurIds.length < formateurs.length
+                      selectedFormateurIds.length > 0 &&
+                      selectedFormateurIds.length < formateurs.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -84,11 +94,16 @@ export const FormateurListResults = ({ formateurs, ...rest }) => {
                 <TableCell>Email</TableCell>
                 <TableCell>Phone</TableCell>
                 <TableCell>Registration date</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {formateurs.slice(0, limit).map((formateur) => (
-                <TableRow hover key={formateur._id} selected={selectedFormateurIds.indexOf(formateur.id) !== -1}>
+                <TableRow
+                  hover
+                  key={formateur._id}
+                  selected={selectedFormateurIds.indexOf(formateur.id) !== -1}
+                >
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={selectedFormateurIds.indexOf(formateur.id) !== -1}
@@ -101,6 +116,20 @@ export const FormateurListResults = ({ formateurs, ...rest }) => {
                   <TableCell>{formateur.email}</TableCell>
                   <TableCell>{formateur.tel}</TableCell>
                   <TableCell>{format(new Date(formateur.createdAt), "dd/MM/yyyy")}</TableCell>
+                  <TableCell>
+                    <IconButton aria-label="edit" size="medium">
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      size="medium"
+                      onClick={async () => {
+                        await handleDelete(formateur._id);
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

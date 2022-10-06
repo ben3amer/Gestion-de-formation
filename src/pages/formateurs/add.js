@@ -1,11 +1,10 @@
 import Head from "next/head";
-import { Box, Container, Grid, Typography } from "@mui/material";
-import { AccountProfile } from "../components/account/account-profile";
-import { AccountProfileDetails } from "../components/account/account-profile-details";
-import { DashboardLayout } from "../components/dashboard-layout";
+import { Box, Container, Typography } from "@mui/material";
+import { DashboardLayout } from "src/components/dashboard-layout";
 import { useAuth } from "src/contexts/auth";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useRouter } from "next/router";
+import FormateurForm from "src/components/formateur/formateur-form";
 
 const Account = () => {
   const { user, isAuthenticated, loading } = useAuth();
@@ -15,7 +14,6 @@ const Account = () => {
       router.push("/login");
     }
   }, [isAuthenticated, loading, router]);
-  console.log(loading);
   return (
     <>
       {loading && <h1>Loading...</h1>}
@@ -33,16 +31,9 @@ const Account = () => {
           >
             <Container maxWidth="lg">
               <Typography sx={{ mb: 3 }} variant="h4">
-                Account
+                Add
               </Typography>
-              <Grid container spacing={3}>
-                <Grid item lg={4} md={6} xs={12}>
-                  <AccountProfile user={user} />
-                </Grid>
-                <Grid item lg={8} md={6} xs={12}>
-                  <AccountProfileDetails user={user} />
-                </Grid>
-              </Grid>
+              <FormateurForm />
             </Container>
           </Box>
         </>

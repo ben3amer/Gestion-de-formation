@@ -8,9 +8,11 @@ import {
   SvgIcon,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { Search as SearchIcon } from "../../icons/search";
 
 export const FormateurListToolbar = (props) => {
+  const router = useRouter();
   return (
     <Box {...props}>
       <Box
@@ -26,7 +28,7 @@ export const FormateurListToolbar = (props) => {
           Formateurs
         </Typography>
         <Box sx={{ m: 1 }}>
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={() => router.push("/formateurs/add")}>
             Add Formateurs
           </Button>
         </Box>
