@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const createSession = (body) => {
-  return api.get("/sessions", body);
+  return api.post("/sessions", body);
 };
 
 export const getSessions = (criteria = "") => {
@@ -13,9 +13,9 @@ export const getSessionById = (id) => {
 };
 
 export const updateSession = (id, body) => {
-  return api.get(`/sessions/${id}`, body);
+  return api.patch(`/sessions/${id}`, body);
 };
 
 export const deleteSession = (id) => {
-  return api.get(`/sessions/${id}`);
+  return api.delete(`/sessions/${id}`);
 };

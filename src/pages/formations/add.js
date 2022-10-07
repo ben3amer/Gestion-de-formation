@@ -2,12 +2,12 @@ import Head from "next/head";
 import { Box, Container, Typography } from "@mui/material";
 import { DashboardLayout } from "src/components/dashboard-layout";
 import { useAuth } from "src/contexts/auth";
-import { useEffect,useState } from "react";
+import { useEffect} from "react";
 import { useRouter } from "next/router";
-import FormateurForm from "src/components/formateur/formateur-form";
+import FormationForm from "src/components/formation/formation-form";
 
 const Account = () => {
-  const { user, isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -20,7 +20,7 @@ const Account = () => {
       {isAuthenticated && (
         <>
           <Head>
-            <title>Formateur | IGA Tunisie</title>
+            <title>Formation | IGA Tunisie</title>
           </Head>
           <Box
             component="main"
@@ -31,9 +31,9 @@ const Account = () => {
           >
             <Container maxWidth="lg">
               <Typography sx={{ mb: 3 }} variant="h4">
-                Add Formateur
+                Add Formation
               </Typography>
-              <FormateurForm />
+              <FormationForm />
             </Container>
           </Box>
         </>

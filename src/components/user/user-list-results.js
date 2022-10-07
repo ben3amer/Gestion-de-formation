@@ -3,7 +3,6 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import {
-  Avatar,
   Box,
   Card,
   Checkbox,
@@ -13,11 +12,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
+  IconButton
 } from "@mui/material";
-import { getInitials } from "../../utils/get-initials";
+import { Delete, Edit } from "@mui/icons-material";
+import { deleteUser} from "src/api/user";
 
-export const UserListResults = ({ users, ...rest }) => {
+export const UserListResults = ({ users, setUsers, ...rest }) => {
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -61,7 +61,14 @@ export const UserListResults = ({ users, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-
+  const handleDelete = async (id) => {
+    try {
+      await deleteUser(id);
+      setUsers(users.filter((user) => user._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -84,6 +91,7 @@ export const UserListResults = ({ users, ...rest }) => {
                 <TableCell>Email</TableCell>
                 <TableCell>Role</TableCell>
                 <TableCell>Registration date</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -101,6 +109,20 @@ export const UserListResults = ({ users, ...rest }) => {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.role}</TableCell>
                   <TableCell>{format(new Date(user.createdAt), "dd/MM/yyyy")}</TableCell>
+                  <TableCell>
+                    <IconButton aria-label="edit" size="medium">
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      size="medium"
+                      onClick={async () => {
+                        await handleDelete(user._id);
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

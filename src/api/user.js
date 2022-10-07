@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const createUser = (body) => {
-  return api.get("/users", body);
+  return api.post("/users", body);
 };
 
 export const getUsers = (criteria = "") => {
@@ -13,9 +13,9 @@ export const getUserById = (id) => {
 };
 
 export const updateUser = (id, body) => {
-  return api.get(`/users/${id}`, body);
+  return api.patch(`/users/${id}`, body);
 };
 
 export const deleteUser = (id) => {
-  return api.get(`/users/${id}`);
+  return api.delete(`/users/${id}`);
 };

@@ -9,10 +9,14 @@ import {
   Typography
 } from '@mui/material';
 import { Search as SearchIcon } from '../../icons/search';
+import { useRouter } from "next/router";
 
 
-export const FormationListToolbar = (props) => (
-  <Box {...props}>
+
+export const FormationListToolbar = (props) => {
+  const router = useRouter();
+  return(
+    <Box {...props}>
     <Box
       sx={{
         alignItems: 'center',
@@ -32,6 +36,7 @@ export const FormationListToolbar = (props) => (
         <Button
           color="primary"
           variant="contained"
+          onClick={() => router.push("/formations/add")}
         >
           Add Formations
         </Button>
@@ -64,4 +69,5 @@ export const FormationListToolbar = (props) => (
       </Card>
     </Box>
   </Box>
-);
+  )
+};

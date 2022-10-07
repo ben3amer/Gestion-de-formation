@@ -1,7 +1,7 @@
 import api from "./api";
 
 export const createParticipant = (body) => {
-  return api.get("/participants", body);
+  return api.post("/participants", body);
 };
 
 export const getParticipants = (criteria = "") => {
@@ -13,9 +13,9 @@ export const getParticipantById = (id) => {
 };
 
 export const updateParticipant = (id, body) => {
-  return api.get(`/participants/${id}`, body);
+  return api.patch(`/participants/${id}`, body);
 };
 
 export const deleteParticipant = (id) => {
-  return api.get(`/participants/${id}`);
+  return api.delete(`/participants/${id}`);
 };

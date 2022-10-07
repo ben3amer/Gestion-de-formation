@@ -1,9 +1,8 @@
 import Head from "next/head";
 import { Box, Container } from "@mui/material";
-import { UserListResults } from "../components/user/user-list-results";
-import { UserListToolbar } from "../components/user/user-list-toolbar";
-import { DashboardLayout } from "../components/dashboard-layout";
-import { users } from "../__mocks__/users";
+import { UserListResults } from "src/components/user/user-list-results";
+import { UserListToolbar } from "src/components/user/user-list-toolbar";
+import { DashboardLayout } from "src/components/dashboard-layout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "src/contexts/auth";
@@ -11,7 +10,7 @@ import { getUsers } from "src/api/user";
 
 const Users = () => {
   const router = useRouter();
-  const { user, isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const [users, setUsers] = useState([]);
   const [criteria, setCriteria] = useState("");
 
@@ -45,7 +44,7 @@ const Users = () => {
           <Container maxWidth={false}>
             <UserListToolbar setCriteria={getCriteria} />
             <Box sx={{ mt: 3 }}>
-              <UserListResults users={users} />
+              <UserListResults users={users} setUsers={setUsers}/>
             </Box>
           </Container>
         </Box>

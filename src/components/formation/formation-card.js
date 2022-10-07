@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { format } from "date-fns";
 import {
-  Avatar,
   Box,
   Card,
   Checkbox,
@@ -13,10 +11,12 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
+  IconButton
 } from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
+import { deleteFormation } from "src/api/formation";
 
-export const FormationCard = ({ formations,  ...rest }) => {
+export const FormationCard = ({ formations,setFormations,  ...rest }) => {
   const [selectedFormationIds, setSelectedFormationIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -59,7 +59,14 @@ export const FormationCard = ({ formations,  ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-
+  const handleDelete = async (id) => {
+    try {
+      await deleteFormation(id);
+      setFormations(formations.filter((formation) => formation._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -83,6 +90,7 @@ export const FormationCard = ({ formations,  ...rest }) => {
                 <TableCell>Duree</TableCell>
                 <TableCell>Budget</TableCell>
                 <TableCell>Année</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -101,7 +109,20 @@ export const FormationCard = ({ formations,  ...rest }) => {
                   <TableCell>{formation.duree}</TableCell>
                   <TableCell>{formation.budget}</TableCell>
                   <TableCell>{formation.year}</TableCell>
-                  <TableCell>{format(new Date(formation.createdAt), "dd/MM/yyyy")}</TableCell>
+                  <TableCell>
+                    <IconButton aria-label="edit" size="medium">
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      size="medium"
+                      onClick={async () => {
+                        await handleDelete(formation._id);
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
