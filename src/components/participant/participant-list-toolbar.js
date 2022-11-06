@@ -28,7 +28,10 @@ export const ParticipantListToolbar = (props) => {
         Participants
         </Typography>
         <Box sx={{ m: 1 }}>
-          <Button color="primary" variant="contained" onClick={() => router.push("/participants/add")}>
+          <Button 
+            color="primary" 
+            variant="contained" 
+            onClick={() => router.push("/participants/add")}>
             Add Participant
           </Button>
         </Box>
@@ -38,7 +41,7 @@ export const ParticipantListToolbar = (props) => {
           <CardContent>
             <Box sx={{ maxWidth: 500 }}>
               <TextField
-                onChange={(e) => props.setCriteria(e.target.value)}
+                onChange={(e) => props.setCriteria(e.target.value)}                
                 fullWidth
                 InputProps={{
                   startAdornment: (
