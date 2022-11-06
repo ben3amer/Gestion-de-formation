@@ -9,9 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Search as SearchIcon } from "../../icons/search";
-
+import { useRouter } from "next/router";
 
 export const ParticipantListToolbar = (props) => {
+  const router = useRouter();
   return (
     <Box {...props}>
       <Box
@@ -27,7 +28,7 @@ export const ParticipantListToolbar = (props) => {
         Participants
         </Typography>
         <Box sx={{ m: 1 }}>
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={() => router.push("/participants/add")}>
             Add Participant
           </Button>
         </Box>

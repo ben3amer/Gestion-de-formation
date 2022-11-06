@@ -1,23 +1,22 @@
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
-import { format } from "date-fns";
 import {
-  Avatar,
   Box,
   Card,
   Checkbox,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from "@mui/material";
-import { getInitials } from "../../utils/get-initials";
+import { Delete, Edit } from "@mui/icons-material";
+import { deleteParticipant } from "src/api/participant";
 
-export const ParticipantListResults = ({ participants, ...rest }) => {
+export const ParticipantListResults = ({ participants, setParticipants, ...rest }) => {
   const [selectedParticipantIds, setSelectedParticipantIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -61,6 +60,14 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+  const handleDelete = async (id) => {
+    try {
+      await deleteParticipant(id);
+      setParticipants(participants.filter((participant) => participant._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Card {...rest}>
@@ -83,7 +90,8 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
                 <TableCell>Last Name</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Phone</TableCell>
-                <TableCell>Registration date</TableCell>
+                <TableCell>Session</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -100,7 +108,21 @@ export const ParticipantListResults = ({ participants, ...rest }) => {
                   <TableCell>{participant.lastName}</TableCell>
                   <TableCell>{participant.email}</TableCell>
                   <TableCell>{participant.phone}</TableCell>
-                  <TableCell>{format(new Date(participant.createdAt), "dd/MM/yyyy")}</TableCell>
+                  <TableCell>{participant.session.titre}</TableCell>
+                  <TableCell>
+                    <IconButton aria-label="edit" size="medium">
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      size="medium"
+                      onClick={async () => {
+                        await handleDelete(participant._id);
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

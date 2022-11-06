@@ -1,8 +1,6 @@
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
-import { getFormateurById } from "src/api/formateur";
-import { getFormationById } from "src/api/formation";
 import { format } from "date-fns";
 import {
   Avatar,
