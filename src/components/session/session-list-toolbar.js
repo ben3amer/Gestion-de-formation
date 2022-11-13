@@ -9,9 +9,11 @@ import {
     Typography,
   } from "@mui/material";
   import { Search as SearchIcon } from "../../icons/search";
-  
+  import { useRouter } from "next/router";
+
   
   export const SessionListToolbar = (props) => {
+    const router = useRouter();
     return (
       <Box {...props}>
         <Box
@@ -27,7 +29,11 @@ import {
             Sessions
           </Typography>
           <Box sx={{ m: 1 }}>
-            <Button color="primary" variant="contained">
+            <Button 
+            color="primary" 
+            variant="contained"
+            onClick={() => router.push("/sessions/add")}
+            >
               Add Sessions
             </Button>
           </Box>

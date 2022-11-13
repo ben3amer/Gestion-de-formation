@@ -3,20 +3,21 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import {
-  Avatar,
   Box,
   Card,
   Checkbox,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from "@mui/material";
+import { deleteSession } from "src/api/session";
+import { Delete, Edit } from "@mui/icons-material";
 
-export const SessionListResults = ({ sessions,formateurs, formations, ...rest }) => {
+export const SessionListResults = ({ sessions, setSessions, ...rest }) => {
   const [selectedSessionIds, setSelectedSessionIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -60,7 +61,14 @@ export const SessionListResults = ({ sessions,formateurs, formations, ...rest })
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-
+  const handleDelete = async (id) => {
+    try {
+      await deleteSession(id);
+      setSessions(sessions.filter((session) => session._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -82,9 +90,8 @@ export const SessionListResults = ({ sessions,formateurs, formations, ...rest })
                 <TableCell>Titre</TableCell>
                 <TableCell>Date Debut</TableCell>
                 <TableCell>Date Fin</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Nombre Participants</TableCell>
                 <TableCell>Formateur</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -101,10 +108,22 @@ export const SessionListResults = ({ sessions,formateurs, formations, ...rest })
                   <TableCell>{session.titre}</TableCell>
                   <TableCell>{format(new Date(session.dateDebut), "dd/MM/yyyy")}</TableCell>
                   <TableCell>{format(new Date(session.dateFin), "dd/MM/yyyy")}</TableCell>
-                  <TableCell>{session.description}</TableCell>
-                  <TableCell>{session.nbParticipants}</TableCell>
                   <TableCell>{session.formateur.nom}  {session.formateur.prenom}</TableCell>
-                  
+                  <TableCell>
+                    <IconButton aria-label="edit" size="medium">
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      size="medium"
+                      onClick={async () => {
+                        await handleDelete(session._id);
+                      }}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
+
                 </TableRow>
               ))}
             </TableBody>
