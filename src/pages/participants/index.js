@@ -21,9 +21,7 @@ const Participants = () => {
   }, [isAuthenticated, loading, router]);
 
   useEffect(() => {
-    getParticipants(criteria).then(
-      (res) => setParticipants(res.data)
-      );
+    getParticipants(criteria).then((res) => setParticipants(res.data));
   }, [criteria]);
 
   const getCriteria = (criteria) => {

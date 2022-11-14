@@ -15,7 +15,6 @@ import router from "next/router";
 import { createSession } from "src/api/session";
 import { getFormations } from "src/api/formation";
 import { getFormateurs } from "src/api/formateur";
-import { MobileDatePicker } from "@mui/lab/MobileDatePicker";
 
 const SessionForm = (props) => {
   const [values, setValues] = useState({});
@@ -126,30 +125,7 @@ const SessionForm = (props) => {
             ))}
           </Select>
             </Grid>
-            <Grid item md={6} xs={12}>
-                <MobileDatePicker
-                    label="Date mobile"
-                    inputFormat="DD/MM/YYYY"
-                    name="dateDebut"
-                    value={values.dateDebut}
-                    required
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                    variant="outlined"
-                />
-            </Grid>
-            <Grid item md={6} xs={12}>
-                <MobileDatePicker
-                        label="Date mobile"
-                        inputFormat="DD/MM/YYYY"
-                        name="dateFin"
-                        value={values.dateFin}
-                        required
-                        onChange={handleChange}
-                        renderInput={(params) => <TextField {...params} />}
-                        variant="outlined"
-                    />
-            </Grid>
+            
           </Grid>
         </CardContent>
         <Divider />

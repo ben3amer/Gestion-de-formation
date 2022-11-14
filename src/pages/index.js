@@ -1,3 +1,4 @@
+import { useContext, useEffect } from "react";
 import Head from "next/head";
 import { Box, Container, Grid } from "@mui/material";
 import { Budget } from "../components/dashboard/budget";
