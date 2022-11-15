@@ -12,27 +12,36 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import router from "next/router";
-import { createSession } from "src/api/session";
+import { updateSession ,  getSessionById } from "src/api/session";
 import { getFormations } from "src/api/formation";
 import { getFormateurs } from "src/api/formateur";
 import { MobileDatePicker } from "@mui/lab";
 import dayjs, { Dayjs } from 'dayjs';
 
-const SessionForm = (props) => {
+const SessionEdit = ({sessionId}) => {
   const [values, setValues] = useState({});
+  const [loaded,setLoaded] = useState(false);
   const [formateurs, setFormateurs] = useState([]);
   const [formations, setFormations] = useState([]);
   const [criteria, setCriteria] = useState("");
   const [date, setDate] = useState(
-    dayjs('2014-08-18T21:11:54'),
+    dayjs(values.dateDebut),
   );
 
   useEffect(() => {
     getFormations(criteria).then((res) => setFormations(res.data));
   }, [criteria]);
+
   useEffect(() => {
     getFormateurs(criteria).then((res) => setFormateurs(res.data));
   }, [criteria]);
+
+  useEffect(() => {
+    getSessionById(sessionId).then((res) => {
+        setValues(res.data)
+        setLoaded(true);
+    });
+  },[sessionId]);
 
   const handleChange = (event) => {
     setValues({
@@ -60,7 +69,14 @@ const SessionForm = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    createSession(values)
+    const body = {
+        formation : values.formation,
+        titre : values.titre,
+        dateDebut : values.dateDebut,
+        dateFin : values.dateFin,
+        formateur : values.formateur,
+    }
+    updateSession(sessionId,body)
       .then((res) => {
         console.log(res);
         router.push("/sessions");
@@ -69,7 +85,9 @@ const SessionForm = (props) => {
   };
 
   return (
-    <form autoComplete="off" noValidate {...props} onSubmit={handleSubmit}>
+    <>
+    {loaded && 
+    <form autoComplete="off" noValidate  onSubmit={handleSubmit}>
       <Card>
         <Divider />
         <CardContent>
@@ -81,7 +99,7 @@ const SessionForm = (props) => {
                 name="titre"
                 onChange={handleChange}
                 required
-                value={values.titre}
+                defaultValue={values.titre}
                 variant="outlined"
               />
             </Grid>
@@ -93,7 +111,7 @@ const SessionForm = (props) => {
               name="formation"
               fullWidth
               onChange={handleChange} 
-              value={values.formation ? values.formation: " "}
+              defaultValue={values.formation ? values.formation: " "}
               label="Formation"
             >
             {formations.map((formation) => (
@@ -109,7 +127,7 @@ const SessionForm = (props) => {
               name="formateur"
               fullWidth
               onChange={handleChange} 
-              value={values.formateur ? values.formateur: ""}
+              defaultValue={values.formateur ? values.formateur: ""}
               label="Formateur"
             >
             {formateurs.map((formateur) => (
@@ -157,7 +175,9 @@ const SessionForm = (props) => {
         </Box>
       </Card>
     </form>
+}
+</>
   );
 };
 
-export default SessionForm;
+export default SessionEdit;

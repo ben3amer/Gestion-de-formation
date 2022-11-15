@@ -15,11 +15,12 @@ import {
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { deleteFormation } from "src/api/formation";
-
+import {useRouter} from 'next/router';
 export const FormationCard = ({ formations,setFormations,  ...rest }) => {
   const [selectedFormationIds, setSelectedFormationIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const router = useRouter();
   const handleSelectAll = (event) => {
     let newSelectedFormationIds;
 
@@ -110,7 +111,17 @@ export const FormationCard = ({ formations,setFormations,  ...rest }) => {
                   <TableCell>{formation.budget}</TableCell>
                   <TableCell>{formation.year}</TableCell>
                   <TableCell>
-                    <IconButton aria-label="edit" size="medium">
+                    <IconButton 
+                    aria-label="edit" 
+                    size="medium"
+                    onClick={ () => {
+                      router.push({
+                        pathname: '/formations/edit',
+                        query: { formationId: formation._id },
+                   })
+                   }
+                   }
+                    >
                       <Edit />
                     </IconButton>
                     <IconButton

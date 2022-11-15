@@ -16,12 +16,12 @@ import {
 } from "@mui/material";
 import { deleteSession } from "src/api/session";
 import { Delete, Edit } from "@mui/icons-material";
-
+import {useRouter} from "next/router";
 export const SessionListResults = ({ sessions, setSessions, ...rest }) => {
   const [selectedSessionIds, setSelectedSessionIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-
+  const router = useRouter();
   const handleSelectAll = (event) => {
     let newSelectedSessionIds;
 
@@ -110,7 +110,15 @@ export const SessionListResults = ({ sessions, setSessions, ...rest }) => {
                   <TableCell>{format(new Date(session.dateFin), "dd/MM/yyyy")}</TableCell>
                   <TableCell>{session.formateur.nom}  {session.formateur.prenom}</TableCell>
                   <TableCell>
-                    <IconButton aria-label="edit" size="medium">
+                    <IconButton aria-label="edit" size="medium"
+                    onClick={ () => {
+                      router.push({
+                       pathname: '/sessions/edit',
+                       query: { sessionId: session._id },
+                   })
+                   }
+                   }
+                    >
                       <Edit />
                     </IconButton>
                     <IconButton

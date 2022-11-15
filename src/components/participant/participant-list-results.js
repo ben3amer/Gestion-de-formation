@@ -15,11 +15,12 @@ import {
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { deleteParticipant } from "src/api/participant";
-
+import { useRouter } from "next/router";
 export const ParticipantListResults = ({ participants, setParticipants, ...rest }) => {
   const [selectedParticipantIds, setSelectedParticipantIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const router = useRouter();
 
   const handleSelectAll = (event) => {
     let newSelectedParticipantIds;
@@ -110,7 +111,15 @@ export const ParticipantListResults = ({ participants, setParticipants, ...rest 
                   <TableCell>{participant.phone}</TableCell>
                   <TableCell>{participant.session.titre}</TableCell>
                   <TableCell>
-                    <IconButton aria-label="edit" size="medium">
+                    <IconButton aria-label="edit" size="medium"
+                     onClick={ () => {
+                      router.push({
+                       pathname: '/participants/edit',
+                       query: { participantId: participant._id },
+                   })
+                   }
+                   }
+                    >
                       <Edit />
                     </IconButton>
                     <IconButton

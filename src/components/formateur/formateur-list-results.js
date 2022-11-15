@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
+import { useRouter, withRouter } from "next/router";
 import { format } from "date-fns";
 import {
   Box,
@@ -21,7 +22,7 @@ export const FormateurListResults = ({ formateurs, setFormateurs, ...rest }) => 
   const [selectedFormateurIds, setSelectedFormateurIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-
+  const router = useRouter();
   const handleSelectAll = (event) => {
     let newSelectedFormateurIds;
 
@@ -117,7 +118,17 @@ export const FormateurListResults = ({ formateurs, setFormateurs, ...rest }) => 
                   <TableCell>{formateur.tel}</TableCell>
                   <TableCell>{format(new Date(formateur.createdAt), "dd/MM/yyyy")}</TableCell>
                   <TableCell>
-                    <IconButton aria-label="edit" size="medium">
+                    <IconButton 
+                    aria-label="edit" 
+                    size="medium"
+                    onClick={ () => {
+                       router.push({
+                        pathname: '/formateurs/edit',
+                        query: { formateurId: formateur._id },
+                    })
+                    }
+                    }
+                    >
                       <Edit />
                     </IconButton>
                     <IconButton
